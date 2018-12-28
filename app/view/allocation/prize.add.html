@@ -1,0 +1,19 @@
+<div ui-view="header"></div>
+
+<h1>Add Prize</h1>
+
+<div uib-alert ng-class="alertType" ng-show="alertType" close="closeAlert()">
+    <p ng-bind-html="alertMessage"></p>
+</div>
+
+<form ng-submit="addPrize(prize)">
+    <div class="form-group">
+        <label for="prizeType">Type</label>
+        <input type="number" class="form-control" id="prizeType" ng-model="prize.prizeType" placeholder="Prize Type">
+        <label for="prizeName">Prize Name</label>
+        <input type="text" class="form-control" id="prizeName" ng-model="prize.prizeName" placeholder="Prize Name">
+    </div>
+
+    <button type="submit" class="btn btn-default">Submit</button>
+    <button type="button" ng-click="back()" class="btn btn-default">Cancel</button>
+</form>

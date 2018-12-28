@@ -1,0 +1,33 @@
+<nav class="navbar navbar-default" role="navigation">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" ng-click="isNavCollapsed = !isNavCollapsed">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Tiger Beer CNY</a>
+    </div>
+    <div class="collapse navbar-collapse" uib-collapse="isNavCollapsed">
+        <ul class="nav navbar-nav">
+            <li ui-sref-active="active"><a ui-sref="user">Users</a></li>
+            <li ui-sref-active="active"><a ui-sref="site.list">Sites</a></li>
+            <li ui-sref-active="active"><a ui-sref="prize.list">Prizes</a></li>
+            <li ui-sref-active="active"><a ui-sref="allocation.list">Allocations</a></li>
+            <li ui-sref-active="active"><a ui-sref="win.list">Winnings</a></li>
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+            <li uib-dropdown>
+                <a href="#" id="profile-dropdown" uib-dropdown-toggle ng-disabled="disabled">
+                    {{ userData.username }} <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="profile-dropdown">
+                    <li role="menuitem"><a href="#">Profile</a></li>
+                    <li class="divider"></li>
+                    <li role="menuitem"><a href="#" ng-click="logout()">Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
