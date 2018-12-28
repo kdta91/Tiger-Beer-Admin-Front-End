@@ -1,0 +1,25 @@
+<div ui-view="header"></div>
+
+<h1>Add User</h1>
+
+<div uib-alert ng-class="alertType" ng-show="alertType" close="closeAlert()">
+    <p ng-bind-html="alertMessage"></p>
+</div>
+
+<form ng-submit="addUser(user)">
+    <div class="form-group">
+        <label for="userType">Type</label>
+        <select class="form-control" id="userType" ng-options="userType as userType.userType for userType in userTypes track by userType._id"
+            ng-model="user.userType" required></select>
+        <label for="username">Username</label>
+        <input type="text" class="form-control" id="username" ng-model="user.username" placeholder="Username" required>
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email" ng-model="user.email" placeholder="Email" required>
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" ng-model="user.password" placeholder="Password"
+            required>
+    </div>
+
+    <button type="submit" class="btn btn-default">Submit</button>
+    <button type="button" ng-click="back()" class="btn btn-default">Cancel</button>
+</form>

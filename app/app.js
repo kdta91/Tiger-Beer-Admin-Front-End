@@ -19,7 +19,6 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             controller: 'UserSessionController'
         })
         .state('user', {
-            url: '/user',
             views: {
                 '': {
                     templateUrl: 'app/view/user/user.html',
@@ -34,8 +33,34 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                 user: function (UserSessionFactory, $state) {
                     return authorizeUser(UserSessionFactory, $state);
                 },
-                GetUsers: function (UserFactory) {
+                users: function (UserFactory) {
                     return UserFactory.getUsers()
+                        .then(function (res) {
+                            return res;
+                        })
+                        .catch(function (err) {
+                            return err;
+                        });
+                }
+            }
+        })
+        .state('user.list', {
+            url: '/user',
+            templateUrl: 'app/view/user/user.list.html',
+            controller: 'UserController'
+        })
+        .state('user.add', {
+            url: '/user/add',
+            templateUrl: 'app/view/user/user.add.html',
+            controller: 'UserController'
+        })
+        .state('user.edit', {
+            url: '/user/:userID',
+            templateUrl: 'app/view/user/user.edit.html',
+            controller: 'UserController',
+            resolve: {
+                users: function (UserFactory, $stateParams) {
+                    return UserFactory.getUser($stateParams.userID)
                         .then(function (res) {
                             return res;
                         })
@@ -136,7 +161,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             templateUrl: 'app/view/site/site.edit.html',
             controller: 'SiteController',
             resolve: {
-                site: function(SiteFactory, $stateParams) {
+                site: function (SiteFactory, $stateParams) {
                     return SiteFactory.getSite($stateParams.siteID)
                         .then(function (res) {
                             return res;
@@ -154,11 +179,21 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                 },
                 'header@allocation': {
                     templateUrl: 'app/view/partials/header.html',
+                    controller: 'UserSessionController'
                 }
             },
             resolve: {
                 user: function (UserSessionFactory, $state) {
                     return authorizeUser(UserSessionFactory, $state);
+                },
+                allocation: function (AllocationFactory) {
+                    return AllocationFactory.getAllocations()
+                        .then(function (res) {
+                            return res;
+                        })
+                        .catch(function (err) {
+                            return err;
+                        });
                 }
             }
         })
@@ -167,19 +202,75 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             templateUrl: 'app/view/allocation/allocation.list.html',
             controller: 'AllocationController'
         })
+        .state('allocation.add', {
+            url: '/allocation/add',
+            templateUrl: 'app/view/allocation/allocation.add.html',
+            controller: 'AllocationController'
+        })
+        .state('allocation.edit', {
+            url: '/allocation/:allocationID',
+            templateUrl: 'app/view/allocation/allocation.edit.html',
+            controller: 'AllocationController',
+            resolve: {
+                allocation: function (AllocationFactory, $stateParams) {
+                    return AllocationFactory.getAllocation($stateParams.allocationID)
+                        .then(function (res) {
+                            return res;
+                        })
+                        .catch(function (err) {
+                            return err;
+                        });
+                }
+            }
+        })
         .state('win', {
-            url: '/win',
             views: {
                 '': {
                     templateUrl: 'app/view/win/win.html',
                 },
                 'header@win': {
                     templateUrl: 'app/view/partials/header.html',
+                    controller: 'UserSessionController'
                 }
             },
             resolve: {
                 user: function (UserSessionFactory, $state) {
                     return authorizeUser(UserSessionFactory, $state);
+                },
+                win: function (WinFactory) {
+                    return WinFactory.getWins()
+                        .then(function (res) {
+                            return res;
+                        })
+                        .catch(function (err) {
+                            return err;
+                        });
+                }
+            }
+        })
+        .state('win.list', {
+            url: '/win',
+            templateUrl: 'app/view/win/win.list.html',
+            controller: 'WinController'
+        })
+        .state('win.add', {
+            url: '/win/add',
+            templateUrl: 'app/view/win/win.add.html',
+            controller: 'WinController'
+        })
+        .state('win.edit', {
+            url: '/win/:winID',
+            templateUrl: 'app/view/win/win.edit.html',
+            controller: 'WinController',
+            resolve: {
+                win: function (WinFactory, $stateParams) {
+                    return WinFactory.getWin($stateParams.winID)
+                        .then(function (res) {
+                            return res;
+                        })
+                        .catch(function (err) {
+                            return err;
+                        });
                 }
             }
         });
@@ -191,15 +282,15 @@ function authorizeUser(UserSessionFactory, $state) {
 
 app.run(['$rootScope', 'UserSessionFactory', '$state', '$transitions', function ($rootScope, UserSessionFactory, $state, $transitions) {
     $transitions.onSuccess({}, function (transition) {
-        console.log(
-            "Successful Transition from " + transition.from().name +
-            " to " + transition.to().name
-        );
+        // console.log(
+        //     "Successful Transition from " + transition.from().name +
+        //     " to " + transition.to().name
+        // );
 
-        $rootScope.previousState = transition.from().name;
+        $rootScope.previousState = transition.from().name || 'user';
     });
 
-    $rootScope.back = function() {
+    $rootScope.back = function () {
         $state.go($rootScope.previousState);
     };
 }]);

@@ -2,11 +2,11 @@
 
 (function () {
     angular.module('app')
-        .controller('AllocationController', ['$scope', '$state', 'UserSessionFactory', 'AllocationFactory', 'allocation', '$uibModal', '$timeout', function ($scope, $state, UserSessionFactory, AllocationFactory, allocation, $uibModal, $timeout) {
-            console.log(allocation);
+        .controller('AllocationController', ['$scope', '$state', 'UserSessionFactory', 'AllocationFactory', 'SiteFactory', 'PrizeFactory', 'allocation', '$uibModal', '$timeout', function ($scope, $state, UserSessionFactory, AllocationFactory, SiteFactory, PrizeFactory, allocation, $uibModal, $timeout) {
+            // console.log(allocation);
             if (allocation.data) {
-                if (allocation.data.allocations) {
-                    $scope.allocations = allocation.data.allocations;
+                if (allocation.data.sitePrizeAllocations) {
+                    $scope.allocations = allocation.data.sitePrizeAllocations;
 
                     $scope.openConfirmModal = function (size, allocationID, parentSelector) {
                         var modalInstance = $uibModal.open({
@@ -25,10 +25,10 @@
                     };
 
                     var deleteAllocation = function (allocationID) {
-                        console.log('Delete Allocation: ' + allocationID);
+                        // console.log('Delete Allocation: ' + allocationID);
                         AllocationFactory.deleteAllocation(allocationID)
                             .then(function (res) {
-                                console.log(res);
+                                // console.log(res);
                                 $scope.alertType = 'alert-success';
                                 $scope.alertMessage = '<strong>Success!</strong>' + res.data.message;
                                 $scope.closeAlert = function () {
@@ -46,26 +46,49 @@
                     $scope.closeConfirmModal = function () {
                         $uibModal.dismiss('cancel');
                     };
-                } else if (allocation.data.prizeName) {
-                    console.log(allocation.data);
-                    console.log(allocation.data.prizeType);
-                    $scope.prize = {
+                } else if (allocation.data.siteId) {
+                    $scope.allocation = {
                         _id: allocation.data._id,
-                        prizeType: allocation.data.prizeType,
-                        prizeName: allocation.data.prizeName
+                        prize: allocation.data.prizeId._id,
+                        site: allocation.data.siteId._id,
+                        quantityAllocated: allocation.data.quantityAllocated,
+                        quantityLeft: allocation.data.quantityLeft,
+                        odds: allocation.data.odds
                     };
-                    console.log($scope.prize);
+                }
+
+                if ($state.$current.name === 'allocation.add' || $state.$current.name === 'allocation.edit') {
+                    SiteFactory.getSites()
+                        .then(function (res) {
+                            // console.log(res.data.sites);
+                            $scope.sites = res.data.sites;
+                        })
+                        .catch(function (err) {
+                            console.log(err);
+                        })
+
+                    PrizeFactory.getPrizes()
+                        .then(function (res) {
+                            // console.log(res.data.prizes);
+                            $scope.prizes = res.data.prizes;
+                        })
+                        .catch(function (err) {
+                            console.log(err);
+                        })
                 }
 
                 $scope.addAllocation = function () {
-                    let prizeData = {
-                        prizeType: $scope.allocation.prizeType,
-                        prizeName: $scope.allocation.prizeName
+                    let allocationData = {
+                        prizeId: $scope.allocation.prize._id,
+                        siteId: $scope.allocation.site.siteID,
+                        quantityAllocated: $scope.allocation.quantityAllocated,
+                        quantityLeft: $scope.allocation.quantityLeft,
+                        odds: $scope.allocation.odds
                     };
 
-                    AllocationFactory.addAllocation(prizeData)
+                    AllocationFactory.addAllocation(allocationData)
                         .then(function (res) {
-                            console.log(res);
+                            // console.log(res);
                             $scope.alertType = 'alert-success';
                             $scope.alertMessage = '<strong>Success!</strong>' + res.data.message;
                             $scope.closeAlert = function () {
@@ -73,13 +96,11 @@
                             };
                         })
                         .catch(function (err) {
-                            console.log(err);
+                            // console.log(err);
                             $scope.alertType = 'alert-danger';
 
                             if (err.data.error) {
-                                if (err.data.error.code === 11000) {
-                                    $scope.alertMessage = '<strong>Error!</strong> Duplicate Prize Type.';
-                                } else if (err.data.error.name === 'ValidationError') {
+                                if (err.data.error.name === 'ValidationError') {
                                     $scope.alertMessage = '<strong>Error!</strong> All fields are required.';
                                 }
                             }
@@ -90,18 +111,27 @@
                         });
                 };
 
-                $scope.updatePrize = function (allocationID) {
-                    let prizeData = [{
-                        'key': 'prizeType',
-                        'value': $scope.allocation.prizeType
+                $scope.updateAllocation = function (allocationID) {
+                    let allocationData = [{
+                        'key': 'prizeId',
+                        'value': $scope.allocation.prize
                     }, {
-                        'key': 'prizeName',
-                        'value': $scope.allocation.prizeName
+                        'key': 'siteId',
+                        'value': $scope.allocation.site
+                    }, {
+                        'key': 'quantityAllocated',
+                        'value': $scope.allocation.quantityAllocated
+                    }, {
+                        'key': 'quantityLeft',
+                        'value': $scope.allocation.quantityLeft
+                    }, {
+                        'key': 'odds',
+                        'value': $scope.allocation.odds
                     }];
 
-                    AllocationFactory.updatePrize(allocationID, prizeData)
+                    AllocationFactory.updateAllocation(allocationID, allocationData)
                         .then(function (res) {
-                            console.log(res);
+                            // console.log(res);
                             $scope.alertType = 'alert-success';
                             $scope.alertMessage = '<strong>Success!</strong>' + res.data.message;
                             $scope.closeAlert = function () {
@@ -109,7 +139,7 @@
                             };
                         })
                         .catch(function (err) {
-                            console.log(err);
+                            // console.log(err);
                             $scope.alertType = 'alert-danger';
 
                             if (err.data.error) {

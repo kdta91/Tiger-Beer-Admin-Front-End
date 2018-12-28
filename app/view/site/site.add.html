@@ -9,14 +9,15 @@
 <form ng-submit="addSite(site)">
     <div class="form-group">
         <label for="siteName">Site Name</label>
-        <input type="text" class="form-control" id="siteName" ng-model="site.siteName" placeholder="Site Name">
+        <input type="text" class="form-control" id="siteName" ng-model="site.siteName" placeholder="Site Name" required>
         <label for="latLong">Lat & Long</label>
-        <input type="text" class="form-control" id="latLong" ng-model="site.geofenceLatLong" placeholder="Lat & Long">
+        <input type="text" class="form-control" id="latLong" ng-model="site.geofenceLatLong" placeholder="Lat & Long"
+            required>
         <label for="startDate">Start Date</label>
         <p class="input-group">
             <input type="text" class="form-control" id="startDate" uib-datepicker-popup="{{format}}" ng-model="site.siteStartDate"
                 is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close"
-                alt-input-formats="altInputFormats" />
+                alt-input-formats="altInputFormats" required />
             <span class="input-group-btn">
                 <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
             </span>
@@ -25,7 +26,7 @@
         <p class="input-group">
             <input type="text" class="form-control" id="endDate" uib-datepicker-popup="{{format}}" ng-model="site.siteEndDate"
                 is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close"
-                alt-input-formats="altInputFormats" />
+                alt-input-formats="altInputFormats" required />
             <span class="input-group-btn">
                 <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
             </span>

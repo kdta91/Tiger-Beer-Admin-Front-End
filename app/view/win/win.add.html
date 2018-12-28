@@ -1,0 +1,24 @@
+<div ui-view="header"></div>
+
+<h1>Add Win</h1>
+
+<div uib-alert ng-class="alertType" ng-show="alertType" close="closeAlert()">
+    <p ng-bind-html="alertMessage"></p>
+</div>
+
+<form ng-submit="addWin(win)">
+    <div class="form-group">
+        <label for="winSessionId">Win Session ID</label>
+        <input type="text" class="form-control" id="winSessionId" ng-model="win.winSessionId" placeholder="Win Session ID"
+            required>
+        <label for="winSite">Site</label>
+        <select class="form-control" id="winSite" ng-options="site as site.siteName for site in sites track by site.siteID"
+            ng-model="win.site" required></select>
+        <label for="winPrize">Prize</label>
+        <select class="form-control" id="winPrize" ng-options="prize as prize.prizeName for prize in prizes track by prize._id"
+            ng-model="win.prize" required></select>
+    </div>
+
+    <button type="submit" class="btn btn-default">Submit</button>
+    <button type="button" ng-click="back()" class="btn btn-default">Cancel</button>
+</form>

@@ -3,7 +3,7 @@
 (function () {
     angular.module('app')
         .controller('SiteController', ['$scope', '$state', 'UserSessionFactory', 'SiteFactory', 'site', '$uibModal', '$timeout', function ($scope, $state, UserSessionFactory, SiteFactory, site, $uibModal, $timeout) {
-            console.log(site.data);
+            // console.log(site.data);
             if (site.data) {
                 if (site.data.sites) {
                     $scope.sites = site.data.sites;

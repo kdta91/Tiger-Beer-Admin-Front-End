@@ -3,7 +3,7 @@
 (function () {
     angular.module('app')
         .controller('PrizeController', ['$scope', '$state', 'UserSessionFactory', 'PrizeFactory', 'prize', '$uibModal', '$timeout', function ($scope, $state, UserSessionFactory, PrizeFactory, prize, $uibModal, $timeout) {
-            console.log(prize);
+            // console.log(prize);
             if (prize.data) {
                 if (prize.data.prizes) {
                     $scope.prizes = prize.data.prizes;
@@ -25,10 +25,10 @@
                     };
 
                     var deletePrize = function (prizeID) {
-                        console.log('Delete Prize: ' + prizeID);
+                        // console.log('Delete Prize: ' + prizeID);
                         PrizeFactory.deletePrize(prizeID)
                             .then(function (res) {
-                                console.log(res);
+                                // console.log(res);
                                 $scope.alertType = 'alert-success';
                                 $scope.alertMessage = '<strong>Success!</strong>' + res.data.message;
                                 $scope.closeAlert = function () {
@@ -47,14 +47,11 @@
                         $uibModal.dismiss('cancel');
                     };
                 } else if (prize.data.prizeName) {
-                    console.log(prize.data);
-                    console.log(prize.data.prizeType);
                     $scope.prize = {
                         _id: prize.data._id,
                         prizeType: prize.data.prizeType,
                         prizeName: prize.data.prizeName
                     };
-                    console.log($scope.prize);
                 }
 
                 $scope.addPrize = function () {
@@ -65,7 +62,7 @@
 
                     PrizeFactory.addPrize(prizeData)
                         .then(function (res) {
-                            console.log(res);
+                            // console.log(res);
                             $scope.alertType = 'alert-success';
                             $scope.alertMessage = '<strong>Success!</strong>' + res.data.message;
                             $scope.closeAlert = function () {
@@ -73,7 +70,7 @@
                             };
                         })
                         .catch(function (err) {
-                            console.log(err);
+                            // console.log(err);
                             $scope.alertType = 'alert-danger';
 
                             if (err.data.error) {
@@ -102,7 +99,7 @@
 
                     PrizeFactory.updatePrize(prizeID, prizeData)
                         .then(function (res) {
-                            console.log(res);
+                            // console.log(res);
                             $scope.alertType = 'alert-success';
                             $scope.alertMessage = '<strong>Success!</strong>' + res.data.message;
                             $scope.closeAlert = function () {
@@ -110,7 +107,7 @@
                             };
                         })
                         .catch(function (err) {
-                            console.log(err);
+                            // console.log(err);
                             $scope.alertType = 'alert-danger';
 
                             if (err.data.error) {

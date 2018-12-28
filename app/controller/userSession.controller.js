@@ -10,10 +10,18 @@
                     .then(function (res) {
                         console.log(res);
                         UserSessionFactory.setUserData(res.data);
-                        $state.go('user');
+                        $state.go('user.list');
                     })
                     .catch(function (err) {
                         console.log(err);
+
+                        if (err) {
+                            $scope.alertType = 'alert-danger';
+                            $scope.alertMessage = '<strong>Error!</strong> ' + err.data.message;
+                            $scope.closeAlert = function () {
+                                $scope.alertType = null;
+                            };
+                        }
                     });
             };
 
