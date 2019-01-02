@@ -55,20 +55,7 @@
                     };
                 }
 
-                $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-                $scope.format = $scope.formats[0];
-                $scope.popup1 = {
-                    opened: false
-                };
-                $scope.popup2 = {
-                    opened: false
-                };
-                $scope.open1 = function () {
-                    $scope.popup1.opened = true;
-                };
-                $scope.open2 = function () {
-                    $scope.popup2.opened = true;
-                };
+                $scope.format = 'dd MMM yyyy';
 
                 $scope.addSite = function () {
                     let siteData = {

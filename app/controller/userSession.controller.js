@@ -6,6 +6,7 @@
             $scope.isNavCollapsed = true;
 
             $scope.login = function (user) {
+                console.log(user);
                 UserSessionFactory.login(user)
                     .then(function (res) {
                         console.log(res);

@@ -5,7 +5,8 @@ var app = angular.module('app', [
     'ui.bootstrap',
     'ngStorage',
     'ngCookies',
-    'ngSanitize'
+    'ngSanitize',
+    'ui.bootstrap.datetimepicker'
 ]);
 
 app.constant('apiEndpoint', 'http://localhost:3000/');
