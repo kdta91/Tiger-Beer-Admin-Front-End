@@ -3,7 +3,7 @@
 (function () {
     angular.module('app')
         .controller('UserController', ['$scope', '$state', 'UserSessionFactory', 'UserFactory', 'UserTypeFactory', 'users', '$uibModal', '$timeout', function ($scope, $state, UserSessionFactory, UserFactory, UserTypeFactory, users, $uibModal, $timeout) {
-            console.log(users);
+            // console.log(users);
             if (users.data) {
                 if (users.data.users) {
                     $scope.users = users.data.users;

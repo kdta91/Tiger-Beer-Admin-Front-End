@@ -65,7 +65,7 @@
                         })
                         .catch(function (err) {
                             console.log(err);
-                        })
+                        });
 
                     PrizeFactory.getPrizes()
                         .then(function (res) {
@@ -74,7 +74,7 @@
                         })
                         .catch(function (err) {
                             console.log(err);
-                        })
+                        });
                 }
 
                 $scope.addAllocation = function () {
@@ -155,6 +155,40 @@
                             };
                         });
                 };
+
+                $scope.prevAlloc = function (allocationID) {
+                    $scope.prevAllocDisabled = true;
+                    AllocationFactory.getPrevAllocation(allocationID)
+                        .then(function (res) {
+                            // console.log(res);
+                            if (res.data && !res.data.message) {
+                                $scope.prevAllocDisabled = false;
+                                $state.go($state.$current.name, {
+                                    'allocationID': res.data._id
+                                });
+                            }
+                        })
+                        .catch(function (err) {
+                            console.log(err);
+                        });
+                }
+
+                $scope.nextAlloc = function (allocationID) {
+                    $scope.nextAllocDisabled = true;
+                    AllocationFactory.getNextAllocation(allocationID)
+                        .then(function (res) {
+                            // console.log(res);]
+                            if (res.data && !res.data.message) {
+                                $scope.nextAllocDisabled = false;
+                                $state.go($state.$current.name, {
+                                    'allocationID': res.data._id
+                                });
+                            }
+                        })
+                        .catch(function (err) {
+                            console.log(err);
+                        });
+                }
             }
         }])
         .controller('ModalInstanceCtrl', ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {

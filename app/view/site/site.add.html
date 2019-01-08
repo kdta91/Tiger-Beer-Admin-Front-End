@@ -15,21 +15,19 @@
             required>
         <label for="startDate">Start Date</label>
         <p class="input-group">
-            <input type="text" class="form-control" id="startDate" uib-datepicker-popup="{{format}}" ng-model="site.siteStartDate"
-                is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close"
-                alt-input-formats="altInputFormats" required />
-            <span class="input-group-btn">
-                <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
-            </span>
+            <datetimepicker ng-model="site.siteStartDate" date-format="{{format}}" date-options="dateOptions"
+                datepicker-append-to-body="false" readonly-date="false" disabled-date="false" hidden-time="false"
+                hidden-date="false" name="datetimepicker" show-spinners="true" readonly-time="false" date-opened="dateOpened"
+                show-button-bar="false">
+            </datetimepicker>
         </p>
         <label for="endDate">End Date</label>
         <p class="input-group">
-            <input type="text" class="form-control" id="endDate" uib-datepicker-popup="{{format}}" ng-model="site.siteEndDate"
-                is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close"
-                alt-input-formats="altInputFormats" required />
-            <span class="input-group-btn">
-                <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
-            </span>
+            <datetimepicker ng-model="site.siteEndDate" date-format="{{format}}" date-options="dateOptions"
+                datepicker-append-to-body="false" readonly-date="false" disabled-date="false" hidden-time="false"
+                hidden-date="false" name="datetimepicker" show-spinners="true" readonly-time="false" date-opened="dateOpened"
+                show-button-bar="false">
+            </datetimepicker>
         </p>
     </div>
 

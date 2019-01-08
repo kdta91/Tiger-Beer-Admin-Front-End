@@ -67,7 +67,7 @@
 
                     SiteFactory.addSite(siteData)
                         .then(function (res) {
-                            console.log(res);
+                            // console.log(res);
                             switch (res.data.code) {
                                 case 'Exists':
                                     $scope.alertType = 'alert-danger';

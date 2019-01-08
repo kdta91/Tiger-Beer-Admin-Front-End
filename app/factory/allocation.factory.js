@@ -19,6 +19,22 @@ angular.module('app').factory('AllocationFactory', ['$http', 'apiEndpoint', func
         });
     };
 
+    AllocationFactory.getPrevAllocation = function (allocationID) {
+        return $http({
+            method: 'GET',
+            url: apiEndpoint + 'site-prize-allocation/prev/' + allocationID,
+            cahce: true
+        });
+    };
+
+    AllocationFactory.getNextAllocation = function (allocationID) {
+        return $http({
+            method: 'GET',
+            url: apiEndpoint + 'site-prize-allocation/next/' + allocationID,
+            cahce: true
+        });
+    };
+
     AllocationFactory.addAllocation = function (data) {
         return $http({
             method: 'POST',

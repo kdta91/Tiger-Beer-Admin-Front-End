@@ -33,7 +33,7 @@
         <td>{{ win.winSessionId }}</td>
         <td>{{ win.siteId.siteName }}</td>
         <td>{{ win.sitePrizeId.prizeName }}</td>
-        <td>{{ win.createdAt | date : 'short' }}</td>
+        <td>{{ win.createdAt | date: 'EEE, dd MMM yyyy h:mm:ss a' }}</td>
         <td>
             <a ui-sref="win.edit({ winID: win._id })" class="btn btn-default">Edit</a>
             <a href="" ng-click="openConfirmModal('sm', win._id)" class="btn btn-default">Delete</a>
